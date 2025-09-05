@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoletaWin - Cassino Online Premium</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Partículas de Fundo -->
+    <div class="particles-bg" id="particles-bg"></div>
+    
+    <!-- Container para Confetes -->
+    <div class="confetti-container"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>RoletaWin</h1>
+                    <div class="logo-subtitle">PREMIUM</div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#roleta" class="nav-link">
+                    <i class="fas fa-circle-notch"></i>
+                    <span>Roleta</span>
+                </a>
+                <a href="#depositar" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Depositar</span>
+                </a>
+                <a href="#historico" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    <span>Histórico</span>
+                </a>
+            </nav>
+            
+            <div class="user-info">
+                <div class="saldo-display">
+                    <div class="saldo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="saldo-info">
+                        <div class="saldo-label">Saldo</div>
+                        <div class="saldo-valor">R$ <span id="saldo-atual">0,00</span></div>
+                    </div>
+                </div>
+                <button class="btn-sacar">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Sacar</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="home-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i>
+                        <span>CASSINO PREMIUM</span>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="title-line-1">Bem-vindo ao</span>
+                        <span class="title-line-2">RoletaWin</span>
+                        <span class="title-accent">Premium</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Experimente a emoção dos jogos de cassino com tecnologia de ponta, 
+                        gráficos impressionantes e prêmios reais que vão te surpreender!
+                    </p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">R$ 2.5M+</div>
+                            <div class="stat-label">Prêmios Pagos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Jogadores Ativos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99.8%</div>
+                            <div class="stat-label">Taxa de Pagamento</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="floating-elements">
+                        <div class="floating-coin coin-1">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="floating-coin coin-2">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="floating-coin coin-3">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Giros Grátis -->
+        <section class="giros-gratis-section">
+            <div class="mesa-card mesa-giros-gratis" id="giros-gratis-info">
+                <div class="mesa-glow"></div>
+                
+                <div class="mesa-header">
+                    <div class="mesa-tier">
+                        <i class="fas fa-gift"></i>
+                        <span>GRÁTIS</span>
+                    </div>
+                    <h3 id="giros-title">3 Giros Grátis</h3>
+                    <p class="mesa-subtitle" id="giros-subtitle">Cadastre-se e ganhe até R$ 100,00!</p>
+                </div>
+                
+                <div class="mesa-roleta-display" id="roleta-gratis-container">
+                    <div class="roleta-premium-wrapper">
+                        <div class="roleta-premium" id="roleta">
+                            <!-- 4 setores coloridos com prêmios -->
+                            <div class="setor setor-premio setor-25">
+                                <span class="setor-text">R$ 25</span>
+                                <div class="setor-shine"></div>
+                            </div>
+                            <div class="setor setor-premio setor-50">
+                                <span class="setor-text">R$ 50</span>
+                                <div class="setor-shine"></div>
+                            </div>
+                            <div class="setor setor-premio setor-75">
+                                <span class="setor-text">R$ 75</span>
+                                <div class="setor-shine"></div>
+                            </div>
+                            <div class="setor setor-premio setor-100">
+                                <span class="setor-text">R$ 100</span>
+                                <div class="setor-shine"></div>
+                            </div>
+                            
+                            <div class="roleta-center">
+                                <div class="center-logo">★</div>
+                            </div>
+                        </div>
+                        
+                        <div class="roleta-ponteiro-premium">
+                            <div class="ponteiro-glow"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mesa-premios" id="giros-premios-info">
+                    <div class="premios-header">
+                        <i class="fas fa-trophy"></i>
+                        <span>Prêmios Possíveis</span>
+                    </div>
+                    <div class="premios-list">
+                        <div class="premio-item">
+                            <span class="premio-valor">R$ 25,00</span>
+                            <span class="premio-chance">25%</span>
+                        </div>
+                        <div class="premio-item">
+                            <span class="premio-valor">R$ 50,00</span>
+                            <span class="premio-chance">25%</span>
+                        </div>
+                        <div class="premio-item">
+                            <span class="premio-valor">R$ 75,00</span>
+                            <span class="premio-chance">25%</span>
+                        </div>
+                        <div class="premio-item premio-destaque">
+                            <span class="premio-valor">R$ 100,00</span>
+                            <span class="premio-chance">25%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="botoes-controle">
+                    <button class="btn-jogar" id="btn-girar">
+                        <i class="fas fa-play"></i>
+                        <span>GIRAR</span>
+                        <div class="btn-bg"></div>
+                    </button>
+                    <button class="btn-jogar btn-parar hidden" id="btn-parar">
+                        <i class="fas fa-stop"></i>
+                        <span>PARAR</span>
+                        <div class="btn-bg"></div>
+                    </button>
+                </div>
+                
+                <div class="giros-info-premium" id="giros-info" style="display: none;">
+                    <div class="giros-counter">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Giros restantes: <span id="giros-count">3</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Mesas Premium -->
+        <section class="mesas-section">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-table"></i>
+                    <span>MESAS PREMIUM</span>
+                </div>
+                <h2>Mesas com Apostas</h2>
+                <p>Escolha sua mesa e teste sua sorte com prêmios incríveis</p>
+            </div>
+            
+            <div class="mesas-grid">
+                <!-- Mesa Bronze -->
+                <div class="mesa-card mesa-bronze" data-valor="5">
+                    <div class="mesa-glow"></div>
+                    
+                    <div class="mesa-header">
+                        <div class="mesa-tier">
+                            <i class="fas fa-medal"></i>
+                            <span>BRONZE</span>
+                        </div>
+                        <h3>Mesa R$ 5,00</h3>
+                        <p class="mesa-subtitle">Entrada Básica</p>
+                    </div>
+                    
+                    <div class="mesa-roleta-display">
+                        <div class="roleta-mini">
+                            <div class="mini-center">★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mesa-premios">
+                        <div class="premios-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Prêmios Possíveis</span>
+                        </div>
+                        <div class="premios-list">
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 10,00</span>
+                                <span class="premio-chance">30%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 25,00</span>
+                                <span class="premio-chance">20%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 50,00</span>
+                                <span class="premio-chance">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="botoes-controle">
+                        <button class="btn-jogar btn-bronze">
+                            <i class="fas fa-play"></i>
+                            <span>JOGAR AGORA</span>
+                            <div class="btn-bg"></div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mesa Prata -->
+                <div class="mesa-card mesa-prata" data-valor="10">
+                    <div class="mesa-glow"></div>
+                    
+                    <div class="mesa-header">
+                        <div class="mesa-tier">
+                            <i class="fas fa-medal"></i>
+                            <span>PRATA</span>
+                        </div>
+                        <h3>Mesa R$ 10,00</h3>
+                        <p class="mesa-subtitle">Prêmios Médios</p>
+                    </div>
+                    
+                    <div class="mesa-roleta-display">
+                        <div class="roleta-mini">
+                            <div class="mini-center">★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mesa-premios">
+                        <div class="premios-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Prêmios Possíveis</span>
+                        </div>
+                        <div class="premios-list">
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 25,00</span>
+                                <span class="premio-chance">25%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 50,00</span>
+                                <span class="premio-chance">20%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 100,00</span>
+                                <span class="premio-chance">15%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="botoes-controle">
+                        <button class="btn-jogar btn-prata">
+                            <i class="fas fa-play"></i>
+                            <span>JOGAR AGORA</span>
+                            <div class="btn-bg"></div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mesa Ouro -->
+                <div class="mesa-card mesa-ouro" data-valor="25">
+                    <div class="mesa-glow"></div>
+                    
+                    <div class="mesa-header">
+                        <div class="mesa-tier">
+                            <i class="fas fa-crown"></i>
+                            <span>OURO</span>
+                        </div>
+                        <h3>Mesa R$ 25,00</h3>
+                        <p class="mesa-subtitle">Prêmios Altos</p>
+                    </div>
+                    
+                    <div class="mesa-roleta-display">
+                        <div class="roleta-mini">
+                            <div class="mini-center">★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mesa-premios">
+                        <div class="premios-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Prêmios Possíveis</span>
+                        </div>
+                        <div class="premios-list">
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 50,00</span>
+                                <span class="premio-chance">20%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 100,00</span>
+                                <span class="premio-chance">15%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 250,00</span>
+                                <span class="premio-chance">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="botoes-controle">
+                        <button class="btn-jogar btn-ouro">
+                            <i class="fas fa-play"></i>
+                            <span>JOGAR AGORA</span>
+                            <div class="btn-bg"></div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mesa Diamante -->
+                <div class="mesa-card mesa-diamante" data-valor="50">
+                    <div class="mesa-glow"></div>
+                    
+                    <div class="mesa-header">
+                        <div class="mesa-tier">
+                            <i class="fas fa-gem"></i>
+                            <span>DIAMANTE</span>
+                        </div>
+                        <h3>Mesa R$ 50,00</h3>
+                        <p class="mesa-subtitle">Prêmios Máximos</p>
+                    </div>
+                    
+                    <div class="mesa-roleta-display">
+                        <div class="roleta-mini">
+                            <div class="mini-center">★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mesa-premios">
+                        <div class="premios-header">
+                            <i class="fas fa-trophy"></i>
+                            <span>Prêmios Possíveis</span>
+                        </div>
+                        <div class="premios-list">
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 100,00</span>
+                                <span class="premio-chance">15%</span>
+                            </div>
+                            <div class="premio-item">
+                                <span class="premio-valor">R$ 250,00</span>
+                                <span class="premio-chance">10%</span>
+                            </div>
+                            <div class="premio-item premio-destaque">
+                                <span class="premio-valor">R$ 500,00</span>
+                                <span class="premio-chance">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="botoes-controle">
+                        <button class="btn-jogar btn-diamante">
+                            <i class="fas fa-play"></i>
+                            <span>JOGAR AGORA</span>
+                            <div class="btn-bg"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Status da Roleta -->
+    <div class="status-container" id="status-container">
+        <div class="status-text" id="status-text">Pronto para girar!</div>
+        <div class="velocidade-container">
+            <div class="velocidade-label">Velocidade</div>
+            <div class="velocidade-bar-container">
+                <div class="velocidade-bar" id="velocidade-bar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resultado -->
+    <div class="resultado-container" id="resultado">
+        <!-- Resultado será exibido aqui -->
+    </div>
+    
+    <!-- Modal de Resultado -->
+    <div class="modal-overlay hidden" id="resultado-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-icon" id="resultado-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 id="resultado-titulo">Parabéns!</h2>
+                <p id="resultado-descricao">Você ganhou um prêmio!</p>
+            </div>
+            
+            <div class="premio-display" id="premio-display">
+                <div class="premio-valor" id="premio-valor">R$ 100,00</div>
+                <div class="premio-label">Prêmio Ganho</div>
+            </div>
+            
+            <div class="saldo-atualizado">
+                <div class="premio-label">Novo Saldo:</div>
+                <div class="premio-valor">R$ <span id="novo-saldo">100,00</span></div>
+            </div>
+            
+            <div class="giros-restantes" id="giros-restantes-modal">
+                <i class="fas fa-sync-alt"></i>
+                <span>Giros restantes: <span id="giros-restantes-count">2</span></span>
+            </div>
+            
+            <button class="btn-continuar" id="btn-continuar">
+                <i class="fas fa-arrow-right"></i>
+                <span>Continuar</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Container para Toasts -->
+    <div id="toast-container"></div>
+    
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+
