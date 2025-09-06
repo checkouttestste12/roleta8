@@ -3,209 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoletaWin - Roleta Aprimorada</title>
-    
-    <!-- Fonts -->
+    <title>RoletaWin - Roleta Profissional</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Partículas de Fundo -->
-    <div class="particles-bg" id="particles-bg"></div>
+    <div class="particles-bg"></div>
     
-    <!-- Container para Confetes -->
-    <div class="confetti-container"></div>
-    
-    <!-- Header -->
+    <!-- Header Premium -->
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-crown"></i>
-                </div>
+                <div class="logo-icon">👑</div>
                 <div class="logo-text">
                     <h1>RoletaWin</h1>
-                    <div class="logo-subtitle">APRIMORADA</div>
+                    <div class="logo-subtitle">PROFISSIONAL</div>
                 </div>
             </div>
             
-            <div class="user-info">
-                <div class="saldo-display">
-                    <div class="saldo-icon">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <div class="saldo-info">
-                        <div class="saldo-label">Saldo</div>
-                        <div class="saldo-valor">R$ <span id="saldo-atual">0,00</span></div>
-                    </div>
-                </div>
+            <div class="saldo-display">
+                <span class="saldo-label">Saldo</span>
+                <span class="saldo-valor">R$ 0,00</span>
             </div>
         </div>
     </header>
-    
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <i class="fas fa-star"></i>
-                        <span>ROLETA APRIMORADA</span>
-                    </div>
-                    
-                    <h1 class="hero-title">
-                        <span class="title-line-1">Roleta com</span>
-                        <span class="title-line-2">4 Setores Coloridos</span>
-                        <span class="title-accent">Mais Chances de Ganhar!</span>
-                    </h1>
-                    
-                    <p class="hero-subtitle">
-                        Agora com 4 setores coloridos ao invés de 3, oferecendo mais oportunidades de prêmios!
-                    </p>
-                </div>
-            </div>
-        </section>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <!-- Título Principal -->
+        <h1 class="titulo-principal">Roleta com</h1>
+        <h2 class="subtitulo">4 Setores Coloridos</h2>
+        <p class="subtitulo" style="color: #b19cd9;">Mais Chances de Ganhar!</p>
         
-        <!-- Seção Roleta Aprimorada -->
-        <section class="roleta-section">
-            <div class="mesa-card mesa-aprimorada" id="roleta-aprimorada-info">
-                <div class="mesa-glow"></div>
-                
-                <div class="mesa-header">
-                    <div class="mesa-tier">
-                        <i class="fas fa-gem"></i>
-                        <span>APRIMORADA</span>
-                    </div>
-                    <h3 id="roleta-title">Roleta 4 Setores Coloridos</h3>
-                    <p class="mesa-subtitle" id="roleta-subtitle">4 setores com prêmios + 4 setores vazios</p>
+        <div class="badge-aprimorada">
+            ⭐ ROLETA PROFISSIONAL
+        </div>
+        
+        <p class="descricao">
+            Agora com 4 setores coloridos ao invés de 3, oferecendo mais 
+            oportunidades de prêmios com design profissional de cassino!
+        </p>
+
+        <!-- Mesa da Roleta -->
+        <div class="mesa-roleta">
+            <h3 class="titulo-mesa">Roleta 4 Setores Coloridos</h3>
+            <p class="subtitulo-mesa">4 setores com prêmios + 4 setores vazios</p>
+            
+            <!-- Container da Roleta -->
+            <div class="roleta-container">
+                <div class="roleta">
+                    <!-- Indicador -->
+                    <div class="indicador"></div>
+                    
+                    <!-- Valores nos Setores -->
+                    <div class="setor-valor">R$ 25</div>
+                    <div class="setor-valor">R$ 15</div>
+                    <div class="setor-valor">R$ 50</div>
+                    <div class="setor-valor">R$ 100</div>
+                    
+                    <!-- Centro da Roleta -->
+                    <div class="centro-roleta">⭐</div>
                 </div>
-                
-                <div class="mesa-roleta-display" id="roleta-container">
-                    <div class="roleta-premium-wrapper">
-                        <div class="roleta-premium" id="roleta">
-                            <!-- Setor 1: Vazio -->
-                            <div class="setor setor-vazio">
-                                <span class="setor-text">Vazio</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 2: R$ 25 (Dourado) -->
-                            <div class="setor setor-dourado">
-                                <span class="setor-text">R$ 25</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 3: Vazio -->
-                            <div class="setor setor-vazio">
-                                <span class="setor-text">Vazio</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 4: R$ 50 (Vermelho) -->
-                            <div class="setor setor-vermelho">
-                                <span class="setor-text">R$ 50</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 5: Vazio -->
-                            <div class="setor setor-vazio">
-                                <span class="setor-text">Vazio</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 6: R$ 75 (Azul) -->
-                            <div class="setor setor-azul">
-                                <span class="setor-text">R$ 75</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 7: Vazio -->
-                            <div class="setor setor-vazio">
-                                <span class="setor-text">Vazio</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            <!-- Setor 8: R$ 100 (Roxo) -->
-                            <div class="setor setor-roxo">
-                                <span class="setor-text">R$ 100</span>
-                                <div class="setor-shine"></div>
-                            </div>
-                            
-                            <div class="roleta-center">
-                                <div class="center-logo">★</div>
-                            </div>
-                        </div>
-                        
-                        <div class="roleta-ponteiro-premium">
-                            <div class="ponteiro-glow"></div>
-                        </div>
+            </div>
+
+            <!-- Prêmios Possíveis -->
+            <div class="premios-container">
+                <h4 class="premios-titulo">
+                    🏆 Prêmios Possíveis
+                </h4>
+                <div class="premios-grid">
+                    <div class="premio-item">
+                        <span class="premio-valor">R$ 25,00</span>
+                        <span class="premio-chance">25%</span>
                     </div>
-                </div>
-                
-                <div class="mesa-premios" id="premios-info">
-                    <div class="premios-header">
-                        <i class="fas fa-trophy"></i>
-                        <span>Prêmios Possíveis</span>
+                    <div class="premio-item">
+                        <span class="premio-valor">R$ 50,00</span>
+                        <span class="premio-chance">25%</span>
                     </div>
-                    <div class="premios-list">
-                        <div class="premio-item">
-                            <span class="premio-valor">R$ 25,00</span>
-                            <span class="premio-chance">25%</span>
-                        </div>
-                        <div class="premio-item">
-                            <span class="premio-valor">R$ 50,00</span>
-                            <span class="premio-chance">25%</span>
-                        </div>
-                        <div class="premio-item">
-                            <span class="premio-valor">R$ 75,00</span>
-                            <span class="premio-chance">25%</span>
-                        </div>
-                        <div class="premio-item premio-destaque">
-                            <span class="premio-valor">R$ 100,00</span>
-                            <span class="premio-chance">25%</span>
-                        </div>
+                    <div class="premio-item">
+                        <span class="premio-valor">R$ 15,00</span>
+                        <span class="premio-chance">25%</span>
                     </div>
-                </div>
-                
-                <div class="botoes-controle">
-                    <button class="btn-jogar" id="btn-girar">
-                        <i class="fas fa-play"></i>
-                        <span>GIRAR</span>
-                        <div class="btn-bg"></div>
-                    </button>
-                    <button class="btn-jogar btn-parar hidden" id="btn-parar">
-                        <i class="fas fa-stop"></i>
-                        <span>PARAR</span>
-                        <div class="btn-bg"></div>
-                    </button>
-                </div>
-                
-                <!-- Status e Indicadores -->
-                <div class="status-container">
-                    <div class="status-text" id="status-text">Pronto para girar a roleta aprimorada!</div>
-                    <div class="velocidade-container">
-                        <div class="velocidade-label">Velocidade</div>
-                        <div class="velocidade-bar-container">
-                            <div class="velocidade-bar" id="velocidade-bar"></div>
-                        </div>
+                    <div class="premio-item">
+                        <span class="premio-valor">R$ 100,00</span>
+                        <span class="premio-chance">25%</span>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    
-    <!-- Resultado Modal -->
-    <div class="resultado-overlay" id="resultado">
-        <div class="resultado-content">
-            <!-- Conteúdo será inserido dinamicamente -->
+
+            <!-- Botão Girar -->
+            <button class="btn-girar">
+                ▶ GIRAR
+            </button>
+
+            <!-- Status Container -->
+            <div class="status-container">
+                <div class="status-texto">Pronto para girar a roleta profissional!</div>
+                <div class="velocidade-label">Velocidade</div>
+                <div class="velocidade-bar">
+                    <div class="velocidade-fill"></div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <!-- Toast Container -->
-    <div class="toast-container" id="toast-container"></div>
-    
-    <!-- JavaScript -->
+
     <script src="script.js"></script>
 </body>
 </html>
