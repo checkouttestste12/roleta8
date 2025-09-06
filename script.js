@@ -1,4 +1,4 @@
-// ===== ROLETA PROFISSIONAL COM GIRO MELHORADO =====
+// ===== ROLETA APRIMORADA COM 4 SETORES COLORIDOS =====
 
 // Estados da máquina de estados da roleta
 const ESTADOS_ROLETA = {
@@ -34,21 +34,20 @@ const elements = {
     resultado: document.getElementById('resultado'),
     toastContainer: document.getElementById('toast-container'),
     particlesBg: document.getElementById('particles-bg'),
-    roletaContainer: document.getElementById('roleta-gratis-container'),
-    girosPremiosInfo: document.getElementById('giros-premios-info')
+    roletaContainer: document.getElementById('roleta-container')
 };
 
-// Configurações da roleta
+// Configurações da roleta APRIMORADA - 4 SETORES COLORIDOS + 4 VAZIOS
 const roletaConfig = {
     setores: [
-        { premio: 0, texto: 'Vazio', angulo: 0 },
-        { premio: 25, texto: 'R$ 25', angulo: 45 },
-        { premio: 0, texto: 'Vazio', angulo: 90 },
-        { premio: 50, texto: 'R$ 50', angulo: 135 },
-        { premio: 0, texto: 'Vazio', angulo: 180 },
-        { premio: 75, texto: 'R$ 75', angulo: 225 },
-        { premio: 0, texto: 'Vazio', angulo: 270 },
-        { premio: 100, texto: 'R$ 100', angulo: 315 }
+        { premio: 0, texto: 'Vazio', angulo: 0, cor: 'vazio' },
+        { premio: 25, texto: 'R$ 25', angulo: 45, cor: 'dourado' },
+        { premio: 0, texto: 'Vazio', angulo: 90, cor: 'vazio' },
+        { premio: 50, texto: 'R$ 50', angulo: 135, cor: 'vermelho' },
+        { premio: 0, texto: 'Vazio', angulo: 180, cor: 'vazio' },
+        { premio: 75, texto: 'R$ 75', angulo: 225, cor: 'azul' },
+        { premio: 0, texto: 'Vazio', angulo: 270, cor: 'vazio' },
+        { premio: 100, texto: 'R$ 100', angulo: 315, cor: 'roxo' }
     ]
 };
 
@@ -68,8 +67,8 @@ class FisicaMelhorada {
         this.parandoForcado = false;
         
         // Configurações melhoradas para giro mais fluido
-        this.tempoAceleracao = 1800; // Reduzido para 1.8s - mais responsivo
-        this.tempoDesaceleracao = 3500; // Reduzido para 3.5s - mais dinâmico
+        this.tempoAceleracao = 1800; // 1.8s - mais responsivo
+        this.tempoDesaceleracao = 3500; // 3.5s - mais dinâmico
         this.velocidadeMaxima = 18 + Math.random() * 6; // 18-24 rpm - mais consistente
         this.velocidadeMinima = 2; // Velocidade inicial mínima
         
@@ -397,7 +396,7 @@ class EfeitosVisuaisMelhorados {
                 'rgba(255, 215, 0, 0.4)',
                 'rgba(255, 107, 107, 0.3)',
                 'rgba(76, 205, 196, 0.3)',
-                'rgba(138, 43, 226, 0.25)'
+                'rgba(155, 89, 182, 0.3)'
             ];
             
             particula.style.cssText = `
@@ -426,7 +425,7 @@ class EfeitosVisuaisMelhorados {
     criarConfetes() {
         if (!elements.particlesBg) return;
         
-        for (let i = 0; i < 30; i++) { // Reduzido de 50 para 30
+        for (let i = 0; i < 30; i++) {
             const confete = document.createElement('div');
             const cores = ['#ffd700', '#ff6b6b', '#4ecdc4', '#9b59b6', '#ff9f43'];
             
@@ -477,26 +476,45 @@ const efeitos = new EfeitosVisuaisMelhorados();
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🎰 RoletaWin Giro Melhorado - Iniciando...');
+    console.log('🎰 RoletaWin Aprimorada carregando...');
     
-    // Adicionar CSS para animações melhoradas
-    adicionarCSSMelhorado();
+    // Verificar se todos os elementos existem
+    if (!verificarElementos()) {
+        console.error('❌ Elementos necessários não encontrados');
+        return;
+    }
     
-    setTimeout(() => {
-        inicializarEventListeners();
-        criarParticulas();
-        console.log('🚀 Sistema melhorado inicializado!');
-    }, 100);
+    // Inicializar sistemas
+    inicializarEventListeners();
+    criarParticulas();
+    adicionarEstilosCSS();
+    
+    console.log('✅ RoletaWin Aprimorada carregada com sucesso!');
+    mostrarToast('Roleta Aprimorada carregada! Agora com 4 setores coloridos!', 'success');
 });
 
-// Adicionar CSS melhorado
-function adicionarCSSMelhorado() {
+// Verificar elementos DOM
+function verificarElementos() {
+    const elementosObrigatorios = ['btnGirar', 'btnParar', 'roleta', 'statusText'];
+    
+    for (const elemento of elementosObrigatorios) {
+        if (!elements[elemento]) {
+            console.error(`❌ Elemento ${elemento} não encontrado`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Adicionar estilos CSS dinamicamente
+function adicionarEstilosCSS() {
     const style = document.createElement('style');
     style.textContent = `
         @keyframes particleGiroSuave {
             0% {
-                transform: translateY(0) scale(0) rotate(0deg);
-                opacity: 0;
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.8;
             }
             20% {
                 opacity: 1;
@@ -584,7 +602,7 @@ function handlePararClick() {
 function iniciarGiroMelhorado() {
     if (gameState.bloqueado) return;
     
-    console.log('🎯 Iniciando giro melhorado');
+    console.log('🎯 Iniciando giro da roleta aprimorada');
     
     // Bloquear ações e definir estado
     gameState.bloqueado = true;
@@ -606,12 +624,12 @@ function iniciarGiroMelhorado() {
     // Iniciar loop de animação melhorado
     iniciarLoopAnimacaoMelhorado();
     
-    mostrarToast('A roleta está girando com movimento melhorado! Clique em PARAR quando quiser parar.', 'info');
+    mostrarToast('A roleta aprimorada está girando! Clique em PARAR quando quiser parar.', 'info');
 }
 
 // ===== LOOP DE ANIMAÇÃO MELHORADO =====
 function iniciarLoopAnimacaoMelhorado() {
-    let ultimoTempo = performance.now(); // Usar performance.now() para maior precisão
+    let ultimoTempo = performance.now();
     
     function loop(tempoAtual) {
         if (gameState.estadoRoleta === ESTADOS_ROLETA.STOPPED) {
@@ -675,7 +693,7 @@ function pararGiroMelhorado() {
         return;
     }
     
-    console.log('🛑 Parando giro melhorado');
+    console.log('🛑 Parando giro da roleta aprimorada');
     
     gameState.estadoRoleta = ESTADOS_ROLETA.STOPPING;
     
@@ -686,12 +704,12 @@ function pararGiroMelhorado() {
     // Atualizar interface
     elements.btnParar.disabled = true;
     
-    mostrarToast('Comando de parada recebido! A roleta está desacelerando suavemente...', 'warning');
+    mostrarToast('Comando de parada recebido! A roleta está desacelerando...', 'warning');
 }
 
 // ===== FINALIZAR GIRO MELHORADO =====
 function finalizarGiroMelhorado() {
-    console.log('🏁 Finalizando giro melhorado');
+    console.log('🏁 Finalizando giro da roleta aprimorada');
     
     // Atualizar estado
     gameState.estadoRoleta = ESTADOS_ROLETA.STOPPED;
@@ -738,7 +756,7 @@ function finalizarGiroMelhorado() {
         // Resetar para próximo giro
         setTimeout(() => {
             trocarBotoes(false);
-            elements.statusText.textContent = 'Pronto para girar com movimento melhorado!';
+            elements.statusText.textContent = 'Pronto para girar a roleta aprimorada!';
         }, 3000);
     }, 800);
 }
@@ -769,10 +787,10 @@ function atualizarIndicadores(estadoFisica) {
     
     switch (estadoFisica.fase) {
         case 'acelerando':
-            statusText = `Acelerando suavemente... ${estadoFisica.velocidade.toFixed(1)} rpm`;
+            statusText = `Acelerando roleta aprimorada... ${estadoFisica.velocidade.toFixed(1)} rpm`;
             break;
         case 'constante':
-            statusText = `Girando fluidamente... ${estadoFisica.velocidade.toFixed(1)} rpm (${tempoFormatado})`;
+            statusText = `Girando com 4 setores coloridos... ${estadoFisica.velocidade.toFixed(1)} rpm (${tempoFormatado})`;
             break;
         case 'desacelerando':
             statusText = `Parando com precisão... ${estadoFisica.velocidade.toFixed(1)} rpm`;
@@ -798,16 +816,30 @@ function atualizarIndicadores(estadoFisica) {
 function mostrarResultado(setor) {
     const isWin = setor.premio > 0;
     
+    // Mapear cores para emojis
+    const emojiCores = {
+        'dourado': '🥇',
+        'vermelho': '🔴',
+        'azul': '🔵',
+        'roxo': '🟣',
+        'vazio': '⚫'
+    };
+    
+    const emoji = emojiCores[setor.cor] || '🎯';
+    
     elements.resultado.innerHTML = `
         <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 15px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">
                 ${isWin ? '🎉' : '😔'}
             </div>
-            <div style="font-size: 2rem; margin-bottom: 10px; color: ${isWin ? '#ffd700' : '#ff6b6b'};">
-                ${setor.texto}
+            <div style="font-size: 2.5rem; margin-bottom: 15px; color: ${isWin ? '#ffd700' : '#ff6b6b'};">
+                ${emoji} ${setor.texto}
             </div>
-            <div style="font-size: 1.2rem; opacity: 0.9;">
-                ${isWin ? 'Parabéns! Você ganhou com o giro melhorado!' : 'Tente novamente com o novo sistema!'}
+            <div style="font-size: 1.3rem; opacity: 0.9; margin-bottom: 10px;">
+                ${isWin ? 'Parabéns! Você ganhou na roleta aprimorada!' : 'Tente novamente! Agora com mais chances!'}
+            </div>
+            <div style="font-size: 1rem; opacity: 0.7;">
+                Setor ${setor.cor} - Ângulo ${setor.angulo}°
             </div>
         </div>
     `;
@@ -864,6 +896,8 @@ function criarEfeitoRipple(event, button) {
 
 // Toast notifications melhoradas
 function mostrarToast(mensagem, tipo = 'info') {
+    if (!elements.toastContainer) return;
+    
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.textContent = mensagem;
@@ -892,14 +926,14 @@ function mostrarToast(mensagem, tipo = 'info') {
 function criarParticulas() {
     if (!elements.particlesBg) return;
     
-    for (let i = 0; i < 20; i++) { // Reduzido de 25 para 20
+    for (let i = 0; i < 20; i++) {
         const particula = document.createElement('div');
         const tamanho = Math.random() * 4 + 1.5;
         const cores = [
             'rgba(255, 215, 0, 0.25)',
-            'rgba(138, 43, 226, 0.15)',
-            'rgba(255, 105, 180, 0.15)',
-            'rgba(76, 205, 196, 0.15)'
+            'rgba(255, 107, 107, 0.15)',
+            'rgba(76, 205, 196, 0.15)',
+            'rgba(155, 89, 182, 0.15)'
         ];
         
         particula.style.cssText = `
@@ -943,4 +977,5 @@ function criarParticulas() {
     }
 }
 
-console.log('🎰 RoletaWin Giro Melhorado carregada com sucesso!');
+console.log('🎰 RoletaWin Aprimorada - Script carregado!');
+
