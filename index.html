@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoletaWin - Cassino Online Premium</title>
+    <title>RoletaWin - Roleta Aprimorada</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,28 +32,9 @@
                 </div>
                 <div class="logo-text">
                     <h1>RoletaWin</h1>
-                    <div class="logo-subtitle">PREMIUM</div>
+                    <div class="logo-subtitle">APRIMORADA</div>
                 </div>
             </div>
-            
-            <nav class="nav-menu">
-                <a href="#home" class="nav-link active">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="#roleta" class="nav-link">
-                    <i class="fas fa-circle-notch"></i>
-                    <span>Roleta</span>
-                </a>
-                <a href="#depositar" class="nav-link">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Depositar</span>
-                </a>
-                <a href="#historico" class="nav-link">
-                    <i class="fas fa-history"></i>
-                    <span>Histórico</span>
-                </a>
-            </nav>
             
             <div class="user-info">
                 <div class="saldo-display">
@@ -65,10 +46,6 @@
                         <div class="saldo-valor">R$ <span id="saldo-atual">0,00</span></div>
                     </div>
                 </div>
-                <button class="btn-sacar">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span>Sacar</span>
-                </button>
             </div>
         </div>
     </header>
@@ -76,103 +53,81 @@
     <!-- Main Content -->
     <main class="main-content">
         <!-- Hero Section -->
-        <section id="home" class="home-section">
+        <section class="hero-section">
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-badge">
                         <i class="fas fa-star"></i>
-                        <span>CASSINO PREMIUM</span>
+                        <span>ROLETA APRIMORADA</span>
                     </div>
                     
                     <h1 class="hero-title">
-                        <span class="title-line-1">Bem-vindo ao</span>
-                        <span class="title-line-2">RoletaWin</span>
-                        <span class="title-accent">Premium</span>
+                        <span class="title-line-1">Roleta com</span>
+                        <span class="title-line-2">4 Setores Coloridos</span>
+                        <span class="title-accent">Mais Chances de Ganhar!</span>
                     </h1>
                     
                     <p class="hero-subtitle">
-                        Experimente a emoção dos jogos de cassino com tecnologia de ponta, 
-                        gráficos impressionantes e prêmios reais que vão te surpreender!
+                        Agora com 4 setores coloridos ao invés de 3, oferecendo mais oportunidades de prêmios!
                     </p>
-                    
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">R$ 2.5M+</div>
-                            <div class="stat-label">Prêmios Pagos</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">50K+</div>
-                            <div class="stat-label">Jogadores Ativos</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">99.8%</div>
-                            <div class="stat-label">Taxa de Pagamento</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="hero-visual">
-                    <div class="floating-elements">
-                        <div class="floating-coin coin-1">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="floating-coin coin-2">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                        <div class="floating-coin coin-3">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
         
-        <!-- Seção Giros Grátis -->
-        <section class="giros-gratis-section">
-            <div class="mesa-card mesa-giros-gratis" id="giros-gratis-info">
+        <!-- Seção Roleta Aprimorada -->
+        <section class="roleta-section">
+            <div class="mesa-card mesa-aprimorada" id="roleta-aprimorada-info">
                 <div class="mesa-glow"></div>
                 
                 <div class="mesa-header">
                     <div class="mesa-tier">
-                        <i class="fas fa-gift"></i>
-                        <span>GRÁTIS</span>
+                        <i class="fas fa-gem"></i>
+                        <span>APRIMORADA</span>
                     </div>
-                    <h3 id="giros-title">3 Giros Grátis</h3>
-                    <p class="mesa-subtitle" id="giros-subtitle">Cadastre-se e ganhe até R$ 100,00!</p>
+                    <h3 id="roleta-title">Roleta 4 Setores Coloridos</h3>
+                    <p class="mesa-subtitle" id="roleta-subtitle">4 setores com prêmios + 4 setores vazios</p>
                 </div>
                 
-                <div class="mesa-roleta-display" id="roleta-gratis-container">
+                <div class="mesa-roleta-display" id="roleta-container">
                     <div class="roleta-premium-wrapper">
                         <div class="roleta-premium" id="roleta">
+                            <!-- Setor 1: Vazio -->
                             <div class="setor setor-vazio">
                                 <span class="setor-text">Vazio</span>
                                 <div class="setor-shine"></div>
                             </div>
-                            <div class="setor">
+                            <!-- Setor 2: R$ 25 (Dourado) -->
+                            <div class="setor setor-dourado">
                                 <span class="setor-text">R$ 25</span>
                                 <div class="setor-shine"></div>
                             </div>
+                            <!-- Setor 3: Vazio -->
                             <div class="setor setor-vazio">
                                 <span class="setor-text">Vazio</span>
                                 <div class="setor-shine"></div>
                             </div>
-                            <div class="setor">
+                            <!-- Setor 4: R$ 50 (Vermelho) -->
+                            <div class="setor setor-vermelho">
                                 <span class="setor-text">R$ 50</span>
                                 <div class="setor-shine"></div>
                             </div>
+                            <!-- Setor 5: Vazio -->
                             <div class="setor setor-vazio">
                                 <span class="setor-text">Vazio</span>
                                 <div class="setor-shine"></div>
                             </div>
-                            <div class="setor">
+                            <!-- Setor 6: R$ 75 (Azul) -->
+                            <div class="setor setor-azul">
                                 <span class="setor-text">R$ 75</span>
                                 <div class="setor-shine"></div>
                             </div>
+                            <!-- Setor 7: Vazio -->
                             <div class="setor setor-vazio">
                                 <span class="setor-text">Vazio</span>
                                 <div class="setor-shine"></div>
                             </div>
-                            <div class="setor">
+                            <!-- Setor 8: R$ 100 (Roxo) -->
+                            <div class="setor setor-roxo">
                                 <span class="setor-text">R$ 100</span>
                                 <div class="setor-shine"></div>
                             </div>
@@ -188,7 +143,7 @@
                     </div>
                 </div>
                 
-                <div class="mesa-premios" id="giros-premios-info">
+                <div class="mesa-premios" id="premios-info">
                     <div class="premios-header">
                         <i class="fas fa-trophy"></i>
                         <span>Prêmios Possíveis</span>
@@ -200,15 +155,15 @@
                         </div>
                         <div class="premio-item">
                             <span class="premio-valor">R$ 50,00</span>
-                            <span class="premio-chance">15%</span>
+                            <span class="premio-chance">25%</span>
                         </div>
                         <div class="premio-item">
                             <span class="premio-valor">R$ 75,00</span>
-                            <span class="premio-chance">10%</span>
+                            <span class="premio-chance">25%</span>
                         </div>
                         <div class="premio-item premio-destaque">
                             <span class="premio-valor">R$ 100,00</span>
-                            <span class="premio-chance">5%</span>
+                            <span class="premio-chance">25%</span>
                         </div>
                     </div>
                 </div>
@@ -226,22 +181,30 @@
                     </button>
                 </div>
                 
-                <div class="giros-info-premium" id="giros-info" style="display: none;">
-                    <div class="giros-counter">
-                        <i class="fas fa-sync-alt"></i>
-                        <span>Giros restantes: <span id="giros-count">3</span></span>
+                <!-- Status e Indicadores -->
+                <div class="status-container">
+                    <div class="status-text" id="status-text">Pronto para girar a roleta aprimorada!</div>
+                    <div class="velocidade-container">
+                        <div class="velocidade-label">Velocidade</div>
+                        <div class="velocidade-bar-container">
+                            <div class="velocidade-bar" id="velocidade-bar"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
-    <!-- Elementos para feedback -->
-    <div id="status-text" style="position: fixed; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 14px; z-index: 1000;">Pronto para girar!</div>
-    <div id="velocidade-bar" style="position: fixed; bottom: 60px; left: 20px; width: 200px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; z-index: 1000;"><div style="height: 100%; background: #00ff00; width: 0%; transition: width 0.3s ease; border-radius: 3px;"></div></div>
-    <div id="resultado" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.9); color: white; padding: 30px; border-radius: 15px; font-size: 18px; z-index: 2000; display: none; text-align: center; min-width: 300px;"></div>
-    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 3000;"></div>
-
+    
+    <!-- Resultado Modal -->
+    <div class="resultado-overlay" id="resultado">
+        <div class="resultado-content">
+            <!-- Conteúdo será inserido dinamicamente -->
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+    
     <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
