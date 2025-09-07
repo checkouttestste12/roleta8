@@ -1,290 +1,430 @@
-class RoletaProfissional {
-    constructor() {
-        this.roleta = document.querySelector('.roleta');
-        this.btnGirar = document.querySelector('.btn-girar');
-        this.statusTexto = document.querySelector('.status-texto');
-        this.velocidadeLabel = document.querySelector('.velocidade-label');
-        this.velocidadeFill = document.querySelector('.velocidade-fill');
-        
-        this.girando = false;
-        this.anguloAtual = 0;
-        this.velocidadeAtual = 0;
-        this.tempoInicio = 0;
-        this.animationId = null;
-        
-        // Configuração dos setores (8 setores de 45 graus cada)
-        this.setores = [
-            { inicio: 0, fim: 45, premio: 25, cor: '#ffd700', nome: 'Amarelo' },      // R$ 25
-            { inicio: 45, fim: 90, premio: 0, cor: '#2a2a2a', nome: 'Vazio' },       // Vazio
-            { inicio: 90, fim: 135, premio: 15, cor: '#ff6b6b', nome: 'Vermelho' },  // R$ 15
-            { inicio: 135, fim: 180, premio: 0, cor: '#2a2a2a', nome: 'Vazio' },     // Vazio
-            { inicio: 180, fim: 225, premio: 50, cor: '#4ecdc4', nome: 'Azul' },     // R$ 50
-            { inicio: 225, fim: 270, premio: 0, cor: '#2a2a2a', nome: 'Vazio' },     // Vazio
-            { inicio: 270, fim: 315, premio: 100, cor: '#b19cd9', nome: 'Roxo' },    // R$ 100
-            { inicio: 315, fim: 360, premio: 0, cor: '#2a2a2a', nome: 'Vazio' }      // Vazio
-        ];
-        
-        this.inicializar();
-    }
-    
-    inicializar() {
-        this.btnGirar.addEventListener('click', () => this.iniciarGiro());
-        this.atualizarStatus('Pronto para girar a roleta aprimorada!');
-        this.atualizarVelocidade(0, 0);
-    }
-    
-    iniciarGiro() {
-        if (this.girando) {
-            this.pararGiro();
-            return;
-        }
-        
-        this.girando = true;
-        this.btnGirar.textContent = '⏹ PARAR';
-        this.btnGirar.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)';
-        
-        // Velocidade inicial aleatória entre 15-25 RPM
-        this.velocidadeAtual = 15 + Math.random() * 10;
-        this.tempoInicio = Date.now();
-        
-        this.roleta.classList.add('girando');
-        this.animarGiro();
-    }
-    
-    animarGiro() {
-        if (!this.girando) return;
-        
-        const tempoDecorrido = (Date.now() - this.tempoInicio) / 1000;
-        
-        // Atualizar ângulo baseado na velocidade
-        this.anguloAtual += this.velocidadeAtual * 6; // 6 graus por RPM por frame
-        if (this.anguloAtual >= 360) {
-            this.anguloAtual -= 360;
-        }
-        
-        // Aplicar rotação
-        this.roleta.style.transform = `rotate(${this.anguloAtual}deg)`;
-        
-        // Atualizar status
-        this.atualizarStatus(`Girando com 4 setores coloridos... ${this.velocidadeAtual.toFixed(1)} rpm (${this.formatarTempo(tempoDecorrido)})`);
-        this.atualizarVelocidade(this.velocidadeAtual, 25);
-        
-        this.animationId = requestAnimationFrame(() => this.animarGiro());
-    }
-    
-    pararGiro() {
-        this.girando = false;
-        
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-        }
-        
-        this.roleta.classList.remove('girando');
-        
-        // Desaceleração suave
-        this.desacelerar();
-    }
-    
-    desacelerar() {
-        const desaceleracao = () => {
-            this.velocidadeAtual *= 0.95; // Reduz 5% da velocidade a cada frame
-            
-            if (this.velocidadeAtual > 0.5) {
-                this.anguloAtual += this.velocidadeAtual * 6;
-                if (this.anguloAtual >= 360) {
-                    this.anguloAtual -= 360;
-                }
-                
-                this.roleta.style.transform = `rotate(${this.anguloAtual}deg)`;
-                this.atualizarVelocidade(this.velocidadeAtual, 25);
-                
-                requestAnimationFrame(desaceleracao);
-            } else {
-                this.finalizarGiro();
-            }
-        };
-        
-        desaceleracao();
-    }
-    
-    finalizarGiro() {
-        // Calcular setor final baseado no ângulo
-        // O indicador está no topo, então precisamos ajustar o cálculo
-        const anguloIndicador = (360 - this.anguloAtual) % 360;
-        const setorVencedor = this.determinarSetor(anguloIndicador);
-        
-        this.mostrarResultado(setorVencedor);
-        this.resetarBotao();
-    }
-    
-    determinarSetor(angulo) {
-        for (let setor of this.setores) {
-            if (angulo >= setor.inicio && angulo < setor.fim) {
-                return setor;
-            }
-        }
-        // Fallback para o primeiro setor
-        return this.setores[0];
-    }
-    
-    mostrarResultado(setor) {
-        if (setor.premio > 0) {
-            this.atualizarStatus(`🎉 PARABÉNS! Você ganhou R$ ${setor.premio.toFixed(2)} no setor ${setor.nome}!`);
-            this.celebrarVitoria();
-        } else {
-            this.atualizarStatus(`😔 Que pena! A roleta parou no setor vazio. Tente novamente!`);
-        }
-        
-        this.atualizarVelocidade(0, 0);
-        
-        // Destacar o setor vencedor temporariamente
-        this.destacarSetor(setor);
-    }
-    
-    destacarSetor(setor) {
-        // Criar um efeito visual para destacar o setor vencedor
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 4px solid ${setor.premio > 0 ? '#00ff88' : '#ff6b6b'};
-            box-shadow: 0 0 30px ${setor.premio > 0 ? 'rgba(0, 255, 136, 0.6)' : 'rgba(255, 107, 107, 0.6)'};
-            pointer-events: none;
-            z-index: 15;
-            animation: pulseWin 2s ease-in-out;
-        `;
-        
-        this.roleta.parentElement.appendChild(overlay);
-        
-        setTimeout(() => {
-            overlay.remove();
-        }, 2000);
-    }
-    
-    celebrarVitoria() {
-        // Adicionar animação de celebração
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulseWin {
-                0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-                50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
-            }
-            
-            @keyframes celebrate {
-                0%, 100% { transform: scale(1); }
-                25% { transform: scale(1.05); }
-                75% { transform: scale(0.95); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        this.roleta.style.animation = 'celebrate 0.6s ease-in-out 3';
-        
-        setTimeout(() => {
-            this.roleta.style.animation = '';
-            style.remove();
-        }, 2000);
-    }
-    
-    resetarBotao() {
-        this.btnGirar.textContent = '▶ GIRAR';
-        this.btnGirar.style.background = 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)';
-        
-        setTimeout(() => {
-            this.atualizarStatus('Pronto para girar a roleta aprimorada!');
-        }, 3000);
-    }
-    
-    atualizarStatus(texto) {
-        this.statusTexto.textContent = texto;
-    }
-    
-    atualizarVelocidade(velocidade, maxVelocidade) {
-        this.velocidadeLabel.textContent = `Velocidade: ${velocidade.toFixed(1)} RPM`;
-        const porcentagem = maxVelocidade > 0 ? (velocidade / maxVelocidade) * 100 : 0;
-        this.velocidadeFill.style.width = `${Math.min(porcentagem, 100)}%`;
-    }
-    
-    formatarTempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segs = Math.floor(segundos % 60);
-        return `${minutos}:${segs.toString().padStart(2, '0')}`;
-    }
-}
+// ===== ROLETA MINI SIMPLIFICADA =====
 
-// Inicializar quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', () => {
-    new RoletaProfissional();
-    
-    // Adicionar efeitos visuais extras
-    adicionarEfeitosVisuais();
+// Estados da roleta
+const ESTADOS_ROLETA = {
+    IDLE: 'idle',
+    SPINNING: 'spinning',
+    STOPPED: 'stopped'
+};
+
+// Estado do jogo
+let gameState = {
+    estadoRoleta: ESTADOS_ROLETA.IDLE,
+    girosRestantes: 3,
+    saldoAtual: 0
+};
+
+// Elementos DOM
+const elements = {
+    btnGirar: document.getElementById('btn-girar'),
+    btnParar: document.getElementById('btn-parar'),
+    roleta: document.getElementById('roleta'),
+    toastContainer: document.getElementById('toast-container'),
+    resultadoModal: document.getElementById('resultado-modal'),
+    btnContinuar: document.getElementById('btn-continuar'),
+    premioValor: document.getElementById('premio-valor'),
+    novoSaldo: document.getElementById('novo-saldo'),
+    girosCount: document.getElementById('giros-count'),
+    saldoAtual: document.getElementById('saldo-atual')
+};
+
+// Configuração de prêmios
+const premiosPossiveis = [
+    { valor: 0, texto: 'Tente novamente!', peso: 50 },
+    { valor: 25, texto: 'R$ 25,00', peso: 25 },
+    { valor: 50, texto: 'R$ 50,00', peso: 15 },
+    { valor: 75, texto: 'R$ 75,00', peso: 10 }
+];
+
+// ===== FUNÇÕES PRINCIPAIS =====
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎰 RoletaWin - Iniciando...');
+    inicializarEventListeners();
+    atualizarInterface();
 });
 
-function adicionarEfeitosVisuais() {
-    // Efeito de brilho nos valores dos prêmios
-    const premioItems = document.querySelectorAll('.premio-item');
-    premioItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            item.style.transform = 'scale(1.02)';
-            item.style.boxShadow = '0 8px 25px rgba(255, 215, 0, 0.2)';
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = 'scale(1)';
-            item.style.boxShadow = 'none';
-        });
-    });
-    
-    // Efeito de partículas douradas
-    criarParticulasDouradas();
-}
-
-function criarParticulasDouradas() {
-    const container = document.querySelector('.container');
-    
-    for (let i = 0; i < 20; i++) {
-        const particula = document.createElement('div');
-        particula.style.cssText = `
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ffd700;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: floatParticle ${5 + Math.random() * 10}s linear infinite;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            z-index: -1;
-        `;
-        
-        container.appendChild(particula);
+// Event listeners
+function inicializarEventListeners() {
+    if (elements.btnGirar) {
+        elements.btnGirar.addEventListener('click', iniciarGiro);
     }
     
-    // Adicionar animação das partículas
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
+    if (elements.btnContinuar) {
+        elements.btnContinuar.addEventListener('click', fecharModal);
+    }
+    
+    // Fechar modal clicando fora
+    if (elements.resultadoModal) {
+        elements.resultadoModal.addEventListener('click', function(e) {
+            if (e.target === elements.resultadoModal) {
+                fecharModal();
             }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
+        });
+    }
 }
+
+// Iniciar giro
+function iniciarGiro() {
+    if (gameState.estadoRoleta !== ESTADOS_ROLETA.IDLE || gameState.girosRestantes <= 0) {
+        return;
+    }
+    
+    gameState.estadoRoleta = ESTADOS_ROLETA.SPINNING;
+    gameState.girosRestantes--;
+    
+    // Atualizar interface
+    elements.btnGirar.disabled = true;
+    elements.btnGirar.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>GIRANDO...</span>';
+    
+    // Adicionar efeito visual à roleta
+    if (elements.roleta) {
+        elements.roleta.style.animationDuration = '0.1s';
+        elements.roleta.style.filter = 'brightness(1.2) saturate(1.3)';
+        elements.roleta.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.6)';
+    }
+    
+    mostrarToast('A roleta está girando! Aguarde o resultado...', 'info');
+    
+    // Simular tempo de giro
+    setTimeout(() => {
+        finalizarGiro();
+    }, 3000 + Math.random() * 2000); // 3-5 segundos
+}
+
+// Finalizar giro
+function finalizarGiro() {
+    gameState.estadoRoleta = ESTADOS_ROLETA.STOPPED;
+    
+    // Remover efeitos visuais
+    if (elements.roleta) {
+        elements.roleta.style.animationDuration = '3s';
+        elements.roleta.style.filter = '';
+        elements.roleta.style.boxShadow = '';
+    }
+    
+    // Calcular resultado
+    const premio = calcularPremio();
+    
+    // Atualizar saldo
+    gameState.saldoAtual += premio.valor;
+    
+    // Mostrar resultado
+    setTimeout(() => {
+        mostrarResultado(premio);
+        
+        // Resetar botão após um tempo
+        setTimeout(() => {
+            resetarBotao();
+        }, 1000);
+    }, 500);
+}
+
+// Calcular prêmio baseado nos pesos
+function calcularPremio() {
+    const totalPeso = premiosPossiveis.reduce((sum, premio) => sum + premio.peso, 0);
+    const random = Math.random() * totalPeso;
+    
+    let pesoAcumulado = 0;
+    for (const premio of premiosPossiveis) {
+        pesoAcumulado += premio.peso;
+        if (random <= pesoAcumulado) {
+            return premio;
+        }
+    }
+    
+    return premiosPossiveis[0]; // Fallback
+}
+
+// Mostrar resultado
+function mostrarResultado(premio) {
+    if (!elements.resultadoModal) return;
+    
+    // Atualizar conteúdo do modal
+    if (elements.premioValor) {
+        elements.premioValor.textContent = premio.texto;
+    }
+    
+    if (elements.novoSaldo) {
+        elements.novoSaldo.textContent = gameState.saldoAtual.toFixed(2);
+    }
+    
+    // Atualizar título e descrição baseado no prêmio
+    const titulo = document.getElementById('resultado-titulo');
+    const descricao = document.getElementById('resultado-descricao');
+    const icon = document.getElementById('resultado-icon');
+    
+    if (premio.valor > 0) {
+        if (titulo) titulo.textContent = 'Parabéns!';
+        if (descricao) descricao.textContent = 'Você ganhou um prêmio!';
+        if (icon) icon.innerHTML = '<i class="fas fa-trophy"></i>';
+        
+        // Efeitos de vitória
+        criarConfetes();
+        mostrarToast(`Parabéns! Você ganhou ${premio.texto}!`, 'success');
+    } else {
+        if (titulo) titulo.textContent = 'Que pena!';
+        if (descricao) descricao.textContent = 'Não foi desta vez, mas continue tentando!';
+        if (icon) icon.innerHTML = '<i class="fas fa-heart-broken"></i>';
+        
+        mostrarToast('Não foi desta vez! Tente novamente.', 'warning');
+    }
+    
+    // Mostrar modal
+    elements.resultadoModal.classList.remove('hidden');
+    
+    // Atualizar interface
+    atualizarInterface();
+}
+
+// Fechar modal
+function fecharModal() {
+    if (elements.resultadoModal) {
+        elements.resultadoModal.classList.add('hidden');
+    }
+    
+    // Verificar se ainda há giros
+    if (gameState.girosRestantes <= 0) {
+        mostrarMensagemSemGiros();
+    } else {
+        gameState.estadoRoleta = ESTADOS_ROLETA.IDLE;
+    }
+}
+
+// Resetar botão
+function resetarBotao() {
+    if (elements.btnGirar) {
+        elements.btnGirar.disabled = false;
+        elements.btnGirar.innerHTML = '<i class="fas fa-play"></i><span>GIRAR</span>';
+    }
+}
+
+// Mostrar mensagem quando não há mais giros
+function mostrarMensagemSemGiros() {
+    const girosSection = document.getElementById('giros-gratis-info');
+    if (!girosSection) return;
+    
+    girosSection.innerHTML = `
+        <div class="mensagem-sem-giros">
+            <div class="sem-giros-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="sem-giros-titulo">Giros Grátis Esgotados</h3>
+            <p class="sem-giros-descricao">
+                Você utilizou todos os seus giros grátis! 
+                Faça um depósito para continuar jogando nas mesas premium.
+            </p>
+            <button class="btn-depositar" onclick="window.location.href='#depositar'">
+                <i class="fas fa-credit-card"></i>
+                <span>Fazer Depósito</span>
+            </button>
+        </div>
+    `;
+    
+    mostrarToast('Giros grátis esgotados! Faça um depósito para continuar.', 'warning');
+}
+
+// Atualizar interface
+function atualizarInterface() {
+    // Atualizar saldo
+    if (elements.saldoAtual) {
+        elements.saldoAtual.textContent = gameState.saldoAtual.toFixed(2);
+    }
+    
+    // Atualizar contador de giros
+    if (elements.girosCount) {
+        elements.girosCount.textContent = gameState.girosRestantes;
+    }
+    
+    // Atualizar contador no modal
+    const girosRestantesModal = document.getElementById('giros-restantes-count');
+    if (girosRestantesModal) {
+        girosRestantesModal.textContent = gameState.girosRestantes;
+    }
+    
+    // Mostrar/ocultar informações de giros
+    const girosInfo = document.getElementById('giros-info');
+    if (girosInfo) {
+        if (gameState.girosRestantes > 0) {
+            girosInfo.style.display = 'block';
+        } else {
+            girosInfo.style.display = 'none';
+        }
+    }
+}
+
+// ===== FUNÇÕES DE EFEITOS VISUAIS =====
+
+// Criar confetes
+function criarConfetes() {
+    const particlesBg = document.getElementById('particles-bg');
+    if (!particlesBg) return;
+    
+    for (let i = 0; i < 30; i++) {
+        const confete = document.createElement('div');
+        const cores = ['#ffd700', '#ff6b6b', '#4ecdc4', '#9b59b6', '#ff9f43'];
+        
+        confete.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 8 + 4}px;
+            height: ${Math.random() * 8 + 4}px;
+            background: ${cores[Math.floor(Math.random() * cores.length)]};
+            left: ${Math.random() * 100}%;
+            top: -10px;
+            pointer-events: none;
+            animation: confeteFall ${2 + Math.random() * 3}s ease-out forwards;
+            animation-delay: ${Math.random() * 2}s;
+            border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+        `;
+        
+        particlesBg.appendChild(confete);
+    }
+    
+    // Limpar confetes após animação
+    setTimeout(() => {
+        const confetes = particlesBg.querySelectorAll('div');
+        confetes.forEach(confete => {
+            if (confete.style.animation.includes('confeteFall')) {
+                confete.remove();
+            }
+        });
+    }, 6000);
+}
+
+// Toast notifications
+function mostrarToast(mensagem, tipo = 'info') {
+    if (!elements.toastContainer) return;
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = mensagem;
+    
+    const estilos = {
+        success: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
+        error: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
+        warning: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+        info: 'linear-gradient(135deg, #4ecdc4 0%, #26a69a 100%)'
+    };
+    
+    toast.style.background = estilos[tipo] || estilos.info;
+    toast.style.color = tipo === 'warning' ? '#0a0e27' : '#ffffff';
+    
+    elements.toastContainer.appendChild(toast);
+    
+    // Animar entrada
+    setTimeout(() => toast.style.transform = 'translateX(0)', 100);
+    
+    // Remover após 4 segundos
+    setTimeout(() => {
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// ===== CSS ADICIONAL PARA ANIMAÇÕES =====
+
+// Adicionar CSS para animações
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes confeteFall {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+    
+    .mensagem-sem-giros {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: rgba(255, 107, 107, 0.1);
+        border-radius: 16px;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        margin: 2rem 0;
+        animation: fadeInUp 0.5s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .sem-giros-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: #ffffff;
+        box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 107, 107, 0.5);
+        }
+    }
+    
+    .sem-giros-titulo {
+        font-family: 'Orbitron', monospace;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #ff6b6b;
+        margin-bottom: 1rem;
+    }
+    
+    .sem-giros-descricao {
+        color: #cccccc;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .btn-depositar {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #0a0e27;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+    }
+    
+    .btn-depositar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+    }
+`;
+document.head.appendChild(style);
+
+console.log('🎰 RoletaWin carregado com sucesso!');
 
